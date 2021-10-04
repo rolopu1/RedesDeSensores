@@ -32,37 +32,6 @@ void setup() {
   analogSetCycles(8);
 
   /*
-  * Set number of samples in the range.
-  * Default is 1
-  * Range is 1 - 255
-  * This setting splits the range into
-  * "samples" pieces, which could look
-  * like the sensitivity has been multiplied
-  * that many times
-  * */
-  analogSetSamples(1);
-
-  /*
-  * Set the divider for the ADC clock.
-  * Default is 1
-  * Range is 1 - 255
-  * */
-  analogSetClockDiv(80);
-
-  /*
-  * Set the attenuation for all channels
-  * Default is 11db
-  * */
-  analogSetAttenuation(ADC_11db); //ADC_0db, ADC_2_5db, ADC_6db, ADC_11db
-
-  /*
-  * Set the attenuation for particular pin
-  * Default is 11db
-  * */
-  analogSetPinAttenuation(36, ADC_0db); //ADC_0db, ADC_2_5db, ADC_6db, ADC_11db
-
-
-  /*
   * Attach pin to ADC (will also clear any other analog mode that could be on)
   * */
   adcAttachPin(14);
@@ -71,17 +40,6 @@ void setup() {
   * Start ADC conversion on attached pin's bus
   * */
   adcStart(14);
-
-  /*
-  * Check if conversion on the pin's ADC bus is currently running
-  * */
-  //adcBusy(uint8_t pin);
-
-  /*
-  * Get the result of the conversion (will wait if it have not finished)
-  * */
-  //adcEnd(uint8_t pin);
-
 
  
 }
@@ -95,7 +53,7 @@ void loop() {
     portEXIT_CRITICAL(&timerMux);
 
     
-    Serial.print("An interrupt as occurred. Total number: ");
+    Serial.print("An interrupt as occurred. ADC: ");
     Serial.println(analogRead(14));
  
   }
