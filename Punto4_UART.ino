@@ -37,7 +37,7 @@ void setup() {
   analogReadResolution(12);                                       //12 bits de resolución es por defecto
   analogSetWidth(12);
   adcAttachPin(14);
-  adcStart(14); 
+  //adcStart(14); 
 }
  
 void loop() {
