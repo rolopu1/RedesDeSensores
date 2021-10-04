@@ -25,13 +25,6 @@ void setup() {
   analogSetWidth(12);
 
   /*
-  * Set number of cycles per sample
-  * Default is 8 and seems to do well
-  * Range is 1 - 255
-  * */
-  analogSetCycles(8);
-
-  /*
   * Attach pin to ADC (will also clear any other analog mode that could be on)
   * */
   adcAttachPin(14);
@@ -39,7 +32,7 @@ void setup() {
   /*
   * Start ADC conversion on attached pin's bus
   * */
-  adcStart(14);
+  //adcStart(14);
 
  
 }
