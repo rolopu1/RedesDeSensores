@@ -29,8 +29,14 @@ Las tareas a realizar son:
   7.- Basándote en el estándar SENML (https://tools.ietf.org/html/rfc8428) crea un fichero json (https://arduinojson.org/) que se genere cada 10 segundos, que contenga datos de temperatura inventados, las unidades y la marca temporal. Súbelos a un servidor ftp con un nombre que sea grupoXX_ddmmss.json. (https://platformio.org/lib/show/6543/esp32_ftpclient) Usa el del laboratorio (IP: 155.210.150.77, user: rsense, pass: rsense) o móntate uno con https://filezilla-project.org/download.php?type=server (asegúrate que el firewall permite conexiones entrantes). [ENSEÑAR]
   
   8.- Sube datos a la nube, en concreto al servicio gratuito proporcionado por Adafruit.  
+  
     a) En primer lugar se debe de crear un usuario en https://io.adafruit.com/, generar una aplicación y obtener un “AIO Key” y crear un feed al que subir datos. Leer info en https://learn.adafruit.com/adafruit-io-basics-feeds 
+    
     c)Sube datos desde navegador (https://www.apirequest.io/) utilizando POST HTTP según documentación (https://io.adafruit.com/api/docs/?shell#create-data)
+    
     d)Usa librería de Adafruit IO (https://github.com/adafruit/Adafruit_IO_Arduino) para subir datos al feed usando MQTT.
+    
     e)Usa la librería para suscribirte al feed y comprueba que recibes actualización al escribir desde el navegador. [ENSEÑAR] 
+    
     e)https://github.com/plapointe6/EspMQTTClient 
+    
