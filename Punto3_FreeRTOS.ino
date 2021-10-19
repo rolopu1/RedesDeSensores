@@ -26,6 +26,12 @@ void loop1( void * param){
   }
 }
 
+/*
+bool vApplicationIdleHook(void){
+  esp_light_sleep_start();
+}
+*/
+
 void loop2 (void *param){
   while(true){
     for(int j =0;j<10; j++){
@@ -64,8 +70,4 @@ void setup() {
 void loop() {
   delay(1000);
 }
-/*
-bool vApplicationIdleHook(void){
-  esp_light_sleep_start();
-}
-*/
+
