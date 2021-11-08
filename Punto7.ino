@@ -68,6 +68,7 @@ void loop()
   /*
    * JSON CONFIGURATION
    */
+  printLocalTime();
   StaticJsonDocument<200> doc;
   doc["sensor"] = "BME680";
   
