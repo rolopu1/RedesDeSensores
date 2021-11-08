@@ -6,6 +6,7 @@
 #include <WiFiClient.h> 
 #include <time.h>;
 #include "ArduinoJson.h"
+#include <iostream>
 
 const char* ssid = "Rodrigo";
 const char* password =  "12345678";
@@ -19,15 +20,17 @@ char ftp_user[]   = "rsense";
 char ftp_pass[]   = "rsense";
 
 ESP32_FTPClient ftp (ftp_server,ftp_user,ftp_pass);
+struct tm timeinfo;
 
 void printLocalTime()
 {
-  struct tm timeinfo;
+  
   if(!getLocalTime(&timeinfo)){
     Serial.println("Failed to obtain time");
     return;
   }
   Serial.println(&timeinfo, "%A, %B %d %Y %H:%M:%S");
+  
 }
 
 void setup() {
@@ -50,35 +53,45 @@ void setup() {
 
   ftp.OpenConnection();
 
-  ftp.MakeDir("RodrigoPunto7");
-  ftp.ChangeWorkDir("/RodrigoPunto7");
+  //ftp.MakeDir("RodrigoPunto7");
+  //ftp.ChangeWorkDir("/RodrigoPunto7");
 
   configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
   printLocalTime();
 
-  /*
-   * JSON CONFIGURATION
-   */
-  StaticJsonDocument<200> doc;
+
 
 }
 
 void loop()
 {
-  static tmElements_t tm; 
+  /*
+   * JSON CONFIGURATION
+   */
+  StaticJsonDocument<200> doc;
   doc["sensor"] = "BME680";
-  doc["time"] = tm.;
+  
+  char timeStringBuff[50]; //50 chars should be enough
+  strftime(timeStringBuff, sizeof(timeStringBuff), "%H:%M:%S", &timeinfo);
+  //print like "const char*"
+  Serial.println(timeStringBuff);  
+  doc["time"] = timeStringBuff;
 
   // Add an array.
   //
-  JsonArray sensor = doc.createNestedArray("sensor");
+  JsonArray dat = doc.createNestedArray("data");
 
   for(int i = 0; i<10;i++){
-    sensor.add(20+i);
+    dat.add(20+i);
+    delay(1000);
   }
+  serializeJson(doc, Serial);
+  char* output;
+  
+  //serializeJson(doc, output, 200);
   
   ftp.InitFile("Type A");
   ftp.NewFile("RandomSensorData.json");
-  ftp.Write("Hi, I'm a new file");
+  ftp.Write(output);
   ftp.CloseFile(); 
 }
