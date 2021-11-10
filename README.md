@@ -3,7 +3,9 @@
 Los objetivos son:
 
   -Leer mensajes BLE emitidos por un sensor
+  
   -Emitir mensajes de advertising vía BLE
+  
   -Establecer una comunicación bidireccional basada en perfil SPP de Bluetooth
 
 Para familiarizarse con la implementación Bluetooth:
