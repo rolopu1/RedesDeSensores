@@ -16,7 +16,7 @@ BLEClient*  pClient;
 bool deviceFound = false;
 bool Encendida = false;
 bool BotonOff = false;
-String knownAddresses[] = { "71:fc:dc:7b:13:83"};
+String knownAddresses[] = { "7f:e1:c6:c0:17:3f"};
 
 //4c00 02 15 908d8bd3a0a54c04bf15774ec963d028 0100 0000 bf
 /*
@@ -48,8 +48,8 @@ class MyAdvertisedDeviceCallbacks: public BLEAdvertisedDeviceCallbacks {
       bool known = false;
       bool Master = false;
       String ManufData = Device.toString().c_str();
-      String TempHex = ManufData.substring(95,99 ); 
-
+      String TempHex = ManufData.substring(99,103);
+      String Signo = ManufData.substring(99);
       //long Temperature =  strtol( TempHex.c_str, NULL, 16 );
       
       for (int i = 0; i < (sizeof(knownAddresses) / sizeof(knownAddresses[0])); i++) {
@@ -66,7 +66,15 @@ class MyAdvertisedDeviceCallbacks: public BLEAdvertisedDeviceCallbacks {
         Serial.println(TempHex[11]);
         Serial.print ("    " );
         Temperature = strtol( TempHex.c_str() , NULL, 16 );
-        TempDec = -1*TempHex[11]+Temperature/200;
+        Serial.println(Temperature);
+        if(TempHex[11] ==0){
+          Serial.println("Positivo");
+          TempDec = (float)Temperature/100;
+        }else{
+          Serial.println("Negativo");
+          TempDec = -(float)Temperature/100;
+        }
+        
         Serial.println ( TempDec );
          //Serial.println( Temperature );
         //Serial.println(strtol(TempHex.c_str(), NULL, 16));        
@@ -110,7 +118,7 @@ void loop() {
   
   Bluetooth();
   char* output;
-  doc["Temp"] = TempDec;
+  doc["Temp"] = Temperature/100;
 
   serializeJson(doc, Serial);
 }
