@@ -90,7 +90,7 @@ void loop()
   
     //Serial.println("at " + String(millis()) + "ms");
     //Serial.println(""); // Add an empty line
-    delay(100);
+    delay(80);
 
       //Serial.println("accelX: " + String(aX));
       stringOne = "aX:"+String(aX)+";";
