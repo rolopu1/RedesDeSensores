@@ -4,19 +4,18 @@
 #include <ESP32_FTPClient.h>
 #include "Arduino.h"
 #include <WiFiClient.h> 
-#include <time.h>;
 #include "ArduinoJson.h"
 #include <iostream>
 
-const char* ssid = "Rodrigo";
-const char* password =  "12345678";
+const char* ssid = "vodafone9320";//"Rodrigo";//""ONO6961";
+const char* password = "QWNLTLDTZHFWNH";//"12345678";//"YK6dR5eCsS55";
 
 const char* ntpServer = "pool.ntp.org";
 const long gmtOffset_sec = 3600;
 const int daylightOffset_sec = 3600;
 
-char ftp_server[] = "155.210.150.77";
-char ftp_user[]   = "rsense";
+char ftp_server[] = "155.210.150.77";//"127.0.0.1";//;"84.125.152.159"//;
+char ftp_user[]   = "rsense";//"esp32";
 char ftp_pass[]   = "rsense";
 
 ESP32_FTPClient ftp (ftp_server,ftp_user,ftp_pass);
@@ -54,7 +53,7 @@ void setup() {
   ftp.OpenConnection();
 
   //ftp.MakeDir("RodrigoPunto7");
-  //ftp.ChangeWorkDir("/RodrigoPunto7");
+  ftp.ChangeWorkDir("/rsense/718694/");
 
   configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
   printLocalTime();
@@ -68,11 +67,12 @@ void loop()
   /*
    * JSON CONFIGURATION
    */
+
   printLocalTime();
   StaticJsonDocument<200> doc;
   doc["sensor"] = "BME680";
   
-  char timeStringBuff[50]; //50 chars should be enough
+  char timeStringBuff[9]; //9 chars should be enough
   strftime(timeStringBuff, sizeof(timeStringBuff), "%H:%M:%S", &timeinfo);
   //print like "const char*"
   Serial.println(timeStringBuff);  
@@ -87,12 +87,15 @@ void loop()
     delay(1000);
   }
   serializeJson(doc, Serial);
-  char* output;
-  
-  //serializeJson(doc, output, 200);
-  
+
+  char* output[200];
+  if (serializeJson(doc, output, 200) == 0) {
+    Serial.println(F("Failed to write to file"));
+  }
+
   ftp.InitFile("Type A");
-  ftp.NewFile("RandomSensorData.json");
-  ftp.Write(output);
+  
+  ftp.NewFile("Grupo718694.json");
+  ftp.WriteData(reinterpret_cast<unsigned char *>(output),200);
   ftp.CloseFile(); 
 }
