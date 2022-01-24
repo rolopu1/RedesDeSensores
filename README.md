@@ -40,3 +40,27 @@ Las tareas a realizar son:
     
     e)https://github.com/plapointe6/EspMQTTClient 
     
+Empieza con un primer punto enseñando a conectar el esp32 con ifi. Para ello se hace ping utilizando la librería “ESP32ping.h” y el ejemplo de esa librería cambiándole las credenciales. Haremos que nos muestre por pantalla la IP. (en nuestro caso sale 192.168.43.137)
+
+El segundo punto consiste en consultar la fecha y la hora por ntp y mostrarla por el puerto serie.
+
+El tercer punto consiste en montar un chat. para ello nos descargaremos una aplicación que haga de socket entre nuestro esp32 y el ordenador. Necesitaremos instalar java y configurar en el panel de control de java la lista de excepciones a sitios seguros para que nos deje ejecutar el programa (http://sockettest.sourceforge.net). Una vez abierto el programa. Metemos la IP de nuestro módulo, que ya hemos visto como se obtenía en el apartado 1. Una vez activamos el ESP32, conectamos el socket y así podemos montar un chat con nuestro ordenador.
+
+El punto 4  hace que el ERP32 coja la hora como en el punto dos y la envía periódicamente por el puerto.
+
+El punto 5 es una modificación del punto 4 en el que ahora es el esp quien manda la hora periódicamente al ordenador cuando este le da el comando de “start”. Si el usuario envía “stop” se deja de envíar la hora.
+
+Estos dos puntos se pueden hacer también con el móvil conectándose a Simple TCP Socket Tester
+
+El punto 6 cambia, se trata de montar un servidor ewb que aparezca la hora cogida como hacemos en el punto 2. Se cogen los archivos html y css de https://randomnerdtutorials.com/esp32-web-server-spiffs-spi-flash-file-system/ . Cuando se le da a reset se coge una hora de referencia para luego restarla y hacer un cronómetro. Hay que acordarse que la primera vez después de subir el programa hay que darle a “Herramientas > ESP32 Sketch Data Upload” para que se suban los datos hrml y css.
+
+En el punto 7 se genera un JSON con datos inventados de un sensor. Se almacenan los datos durante 10 segundos, se comprimen en un JSON y se envía por FTP. Se puede hacer con la red del laboratorio, que me gustaría ver como se conecta ahí. También se puede hacer con fileZilla. Aunque no he conseguido subir bien los archivos.
+
+En el punto 8 se crea un feed en adafruit. Primero se prueban a subir datos manualmente para ver que funciona todo correcto en https://www.apirequest.io/. y después la dinámica de crear un JSON y subir los datos al feed la hará el ESP32.
+
+Se tiene ue escribir esta URL
+https://io.adafruit.com/api/v2/rolopu1/feeds/punto8/data y estos parámetros
+
+
+command:
+curl -X POST -H 'Content-Type: application/json' -H 'X-AIO-Key: aio_FOtG46jZBcp6wi7FcsZAui3lkXeL' -d '{"value": 50}' -v -i 'https://io.adafruit.com/api/v2/rolopu1/feeds/punto8/data'
