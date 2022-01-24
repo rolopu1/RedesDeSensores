@@ -20,3 +20,14 @@ El resto de ficheros se conrresponden con los puntos a entregar del siguiente en
           https://www.arduino.cc/reference/en/language/functions/communication/stream/ 
     5.-   Conecta un sensor inercial por I2C (o SPI), muestrea la aceleración cada 100 ms y manda los datos cada segundo vía UART (cada vez que envíes activa un LED durante 200ms).
           Utilizaremos el sensor https://es.aliexpress.com/item/32843038592.html y https://es.aliexpress.com/item/1904029297.html u otro similar [ENSEÑAR]
+          
+El primer punto a hacer es que un ADC lea el valor analógico cada 10 segundos y lo muestre por pantalla. Para eso utilizaremos la función analogRead() y una interrupción por timer de 10 segundos. Ponemos la resolución y la anchura de bits a 12 con analogReadResolution(12) y analogsetWidth(12).
+
+El siguiente paso es generar una salida PWM proporcional a la lectura hecha por el sensor ADC. Para eso utilizaremos las funciones ledcSetup y LedAttachPin. Una vez configurado el puerto de salida se mete en el loop que tras la lectura, el valor del ADC pasarlo de 10 bits a 8 bits (* 255 / 1023). Para la salida del valor se utilizará la función ledcWrite().
+
+Uniendo todo esto con una parte de control por el usuario, se requiere que dependiendo de 3 posibles comandos del usuario el sistema haga una cosa u otra. Para leer el comando se utiliza Serial.ReadString(), que devuelve un objeto String para compararlo si se ha encontrado un comando u otro. Con las funciones anteriores, simplemente es detectar el nuevo comando y hacer la acción correspondiente.
+
+Por último, el punto 5 se sale un poco de la dirección de los puntos anteriores. El objetivo de este punto es la comunicación de un sensor, en este caso el GY-91 por I2C o SPI. En este caso se ha escogido I2C. 
+
+Para el uso y la comunicación i2C con el acelerómetro se ha utilizado la librería MPU9250_asukiaaa que se puede descargar del propio administrador de librerías del Arduino IDE.
+
