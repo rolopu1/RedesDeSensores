@@ -10,6 +10,6 @@ Detección de movimientos en tenis de mesa.
   
   4.- Meter la inteligencia artificial en un micro
   
-  5.- Con un beacon sacar la decisión de qué movimiento se está haciendo
+  5.- Por BLE sacar la decisión de qué movimiento se está haciendo
 
 
